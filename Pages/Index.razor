@@ -1,7 +1,48 @@
+
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@using System.Text;
+@using System.Threading.Tasks;
+@using Newtonsoft.Json;
+@inject HttpClient Http;
+
 @page "/"
 
 <h1>Hello, world!</h1>
-
+<p>@Data01</p>
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    string Data01 = "90,80,70,60,50,40,30,20,10";
+    TempHumi[] responseBody;
+    protected override async Task OnInitializedAsync()
+    {
+        await getData();
+    }
+
+    private async Task getData()
+    {
+        responseBody = await Http.GetFromJsonAsync<TempHumi[]>("https://mingyu0401dot.azurewebsites.net/api/GetDataFromBlob?code=xZufG/dPEOnARoN4ItS0JZ9cNWpthKauduMnWSDDbSnvwJai4a19dw==");
+        Data01 = "";
+        int i = 0;
+        foreach (var itemA in responseBody)
+        {
+            Data01 = Data01 + itemA.temperature + ",";
+            i++;
+            if (i == 30) break;
+        }
+
+    }
+    public class TempHumi
+    {
+        public string device { get; set; }
+        public string time { get; set; }
+        public int temperature { get; set; }
+        public int humidity { get; set; }
+        public string EventProcessedUtcTime { get; set; }
+        public int PartitionId { get; set; }
+        public string EventEnqueuedUtcTime { get; set; }
+    }
+}
