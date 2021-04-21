@@ -51,7 +51,7 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'Microsoft Azure 스폰서쉽(28697aaf-daed-4d77-b02a-c6dc954a9585)'
+        azureSubscription: 'Microsoft Azure 스폰서쉽(28697aaf-daed-4d77-b02a-c12345678900)'
         appType: 'webAppLinux'
         WebAppName: 'mingyu0402'
         packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
